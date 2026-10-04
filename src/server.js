@@ -24,23 +24,31 @@ const loadBooks = () => {
 };
 
 const onRequest = (request, response) => {
-  const parsedUrl = url.parse(request.url);
+    const parsedUrl = url.parse(request.url, true);
 
-  switch (parsedUrl.pathname) {
-    case '/api/books':
-      bookResponses.getBooks(request, response);
-      break;
-
-    case '/api/titles':
-      bookResponses.getBookTitles(request, response);
-      break;
-
-    default:
-      responses.respondJSON(request, response, 404, {
-        message: 'The page you are looking for was not found.',
-      });
-      break;
-  }
+    switch (parsedUrl.pathname) {
+        case '/api/books':
+          bookResponses.getBooks(request, response);
+          break;
+      
+        case '/api/titles':
+          bookResponses.getBookTitles(request, response);
+          break;
+      
+        case '/api/authors':
+          bookResponses.getAuthors(request, response);
+          break;
+      
+        case '/api/search':
+          bookResponses.searchBooks(request, response, parsedUrl.query);
+          break;
+      
+        default:
+          responses.respondJSON(request, response, 404, {
+            message: 'The page you are looking for was not found.',
+          });
+          break;
+    }
 };
 
 loadBooks();

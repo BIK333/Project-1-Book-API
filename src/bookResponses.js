@@ -71,10 +71,98 @@ const searchBooks = (request, response, query) => {
   responses.respondJSON(request, response, 200, responseJSON);
 };
 
+const addBook = (request, response, body) => {
+    if (!body.title || body.title.trim() === '') {
+      responses.respondJSON(request, response, 400, {
+        message: 'A book title is required.',
+      });
+      return;
+    }
+  
+    if (!body.author || body.author.trim() === '') {
+      responses.respondJSON(request, response, 400, {
+        message: 'An author is required.',
+      });
+      return;
+    }
+  
+    const existingBook = books.find(
+      (book) => book.title.toLowerCase() === body.title.toLowerCase(),
+    );
+  
+    if (existingBook) {
+      responses.respondJSON(request, response, 400, {
+        message: 'A book with that title already exists.',
+      });
+      return;
+    }
+  
+    const newBook = {
+      title: body.title,
+      author: body.author,
+      country: body.country || 'Unknown',
+      language: body.language || 'Unknown',
+      pages: Number(body.pages) || 0,
+      year: Number(body.year) || 0,
+      genres: body.genres || [],
+    };
+  
+    books.push(newBook);
+  
+    responses.respondJSON(request, response, 201, {
+      message: 'Book created successfully.',
+      book: newBook,
+    });
+  };
+  
+  const updateBook = (request, response, body) => {
+    if (!body.title || body.title.trim() === '') {
+      responses.respondJSON(request, response, 400, {
+        message: 'A book title is required.',
+      });
+      return;
+    }
+  
+    const book = books.find(
+      (currentBook) => currentBook.title.toLowerCase() === body.title.toLowerCase(),
+    );
+  
+    if (!book) {
+      responses.respondJSON(request, response, 404, {
+        message: 'Book not found.',
+      });
+      return;
+    }
+  
+    if (body.author) {
+      book.author = body.author;
+    }
+  
+    if (body.country) {
+      book.country = body.country;
+    }
+  
+    if (body.language) {
+      book.language = body.language;
+    }
+  
+    if (body.pages) {
+      book.pages = Number(body.pages);
+    }
+  
+    if (body.year) {
+      book.year = Number(body.year);
+    }
+  
+    responses.respondJSONMeta(response, 204);
+  };
+
 module.exports = {
   setBooks,
   getBooks,
   getBookTitles,
   getAuthors,
   searchBooks,
+  addBook,
+  updateBook,
 };

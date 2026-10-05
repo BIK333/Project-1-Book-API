@@ -5,6 +5,7 @@ const url = require('url');
 
 const bookResponses = require('./bookResponses.js');
 const responses = require('./responses.js');
+const querystring = require('querystring');
 
 const port = process.env.PORT || process.env.NODE_PORT || 3000;
 
@@ -23,8 +24,58 @@ const loadBooks = () => {
   }
 };
 
+const parseBody = (request, response, callback) => {
+    const body = [];
+  
+    request.on('data', (chunk) => {
+      body.push(chunk);
+    });
+  
+    request.on('end', () => {
+      const bodyString = Buffer.concat(body).toString();
+      const contentType = request.headers['content-type'] || '';
+  
+      try {
+        let parsedBody;
+  
+        if (contentType.includes('application/json')) {
+          parsedBody = JSON.parse(bodyString);
+        } else if (contentType.includes('application/x-www-form-urlencoded')) {
+          parsedBody = querystring.parse(bodyString);
+        } else {
+          responses.respondJSON(request, response, 400, {
+            message: 'Unsupported Content-Type.',
+          });
+          return;
+        }
+  
+        callback(parsedBody);
+      } catch {
+        responses.respondJSON(request, response, 400, {
+          message: 'Invalid request body.',
+        });
+      }
+    });
+  };
+
 const onRequest = (request, response) => {
     const parsedUrl = url.parse(request.url, true);
+
+    if (request.method === 'POST') {
+        if (parsedUrl.pathname === '/api/addBook') {
+          parseBody(request, response, (body) => {
+            bookResponses.addBook(request, response, body);
+          });
+          return;
+        }
+      
+        if (parsedUrl.pathname === '/api/updateBook') {
+          parseBody(request, response, (body) => {
+            bookResponses.updateBook(request, response, body);
+          });
+          return;
+        }
+    }
 
     switch (parsedUrl.pathname) {
         case '/api/books':

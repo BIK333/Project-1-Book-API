@@ -43,7 +43,11 @@ const requestData = async (endpoint, type) => {
     showStatus('Loading...');
 
     try {
-    const response = await fetch(endpoint);
+        const response = await fetch(endpoint, {
+            headers: {
+              Accept: 'application/json',
+            },
+        });
 
     if (!response.ok) {
         showStatus(`Request failed: ${response.status}`, 'error');
@@ -137,7 +141,8 @@ document.querySelector('#addBookForm').addEventListener('submit', async (event) 
       const response = await fetch('/api/addBook', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
         },
         body: JSON.stringify(book),
       });
@@ -175,7 +180,8 @@ document.querySelector('#updateBookForm').addEventListener('submit', async (even
       const response = await fetch('/api/updateBook', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
         },
         body: JSON.stringify(book),
       });

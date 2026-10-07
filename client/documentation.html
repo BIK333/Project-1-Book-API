@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Book API Documentation</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <header>
+    <h1>Book API Documentation</h1>
+    <p>Information about the available API endpoints</p>
+  </header>
+
+  <main>
+    <section>
+      <h2>About the API</h2>
+      <p>
+        The Book API allows users to view, search, add, and update
+        information about books. Book data is stored in memory while
+        the server is running.
+      </p>
+
+      <a class="nav-link dark-link" href="/">Return to Book Finder</a>
+    </section>
+
+    <section>
+      <h2>GET /api/books</h2>
+
+      <p><strong>Methods:</strong> GET, HEAD</p>
+
+      <p>
+        Returns all of the books currently stored by the server.
+      </p>
+
+      <p><strong>Successful Status:</strong> 200 OK</p>
+
+      <h3>Example Request</h3>
+      <code>GET /api/books</code>
+    </section>
+
+    <section>
+      <h2>GET /api/titles</h2>
+
+      <p><strong>Methods:</strong> GET, HEAD</p>
+
+      <p>
+        Returns the titles of all books.
+      </p>
+
+      <p><strong>Successful Status:</strong> 200 OK</p>
+
+      <h3>Example Request</h3>
+      <code>GET /api/titles</code>
+    </section>
+
+    <section>
+      <h2>GET /api/authors</h2>
+
+      <p><strong>Methods:</strong> GET, HEAD</p>
+
+      <p>
+        Returns a list of authors from the book data.
+      </p>
+
+      <p><strong>Successful Status:</strong> 200 OK</p>
+
+      <h3>Example Request</h3>
+      <code>GET /api/authors</code>
+    </section>
+
+    <section>
+      <h2>GET /api/search</h2>
+
+      <p><strong>Methods:</strong> GET, HEAD</p>
+
+      <p>
+        Searches the book data using a genre or language query parameter.
+      </p>
+
+      <h3>Genre Example</h3>
+      <code>GET /api/search?genre=Fairy</code>
+
+      <h3>Language Example</h3>
+      <code>GET /api/search?language=English</code>
+
+      <p><strong>Successful Status:</strong> 200 OK</p>
+    </section>
+
+    <section>
+      <h2>POST /api/addBook</h2>
+
+      <p><strong>Method:</strong> POST</p>
+
+      <p>
+        Adds a new book to the in-memory book data.
+      </p>
+
+      <p>
+        The title and author fields are required. Other book information
+        can also be included.
+      </p>
+
+      <p>
+        This endpoint accepts JSON and application/x-www-form-urlencoded
+        request bodies.
+      </p>
+
+      <h3>Possible Status Codes</h3>
+
+      <p>
+        <strong>201 Created:</strong> The book was successfully added.
+      </p>
+
+      <p>
+        <strong>400 Bad Request:</strong> Required information is missing
+        or a book with the same title already exists.
+      </p>
+    </section>
+
+    <section>
+      <h2>POST /api/updateBook</h2>
+
+      <p><strong>Method:</strong> POST</p>
+
+      <p>
+        Updates an existing book. The title is used to find the book
+        that should be updated.
+      </p>
+
+      <p>
+        This endpoint accepts JSON and application/x-www-form-urlencoded
+        request bodies.
+      </p>
+
+      <h3>Possible Status Codes</h3>
+
+      <p>
+        <strong>204 No Content:</strong> The book was successfully updated.
+      </p>
+
+      <p>
+        <strong>400 Bad Request:</strong> A book title was not provided.
+      </p>
+
+      <p>
+        <strong>404 Not Found:</strong> A book with the provided title
+        could not be found.
+      </p>
+    </section>
+
+    <section>
+      <h2>Other Errors</h2>
+
+      <p>
+        Requests made to an endpoint that does not exist return
+        <strong>404 Not Found</strong>.
+      </p>
+
+      <p>
+        Invalid request bodies or unsupported Content-Types return
+        <strong>400 Bad Request</strong>.
+      </p>
+    </section>
+  </main>
+</body>
+</html>

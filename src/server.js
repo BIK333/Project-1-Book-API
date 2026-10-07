@@ -61,6 +61,94 @@ const parseBody = (request, response, callback) => {
 const onRequest = (request, response) => {
     const parsedUrl = url.parse(request.url, true);
 
+    if (parsedUrl.pathname === '/') {
+        const filePath = path.join(__dirname, '../client/client.html');
+    
+        fs.readFile(filePath, (error, data) => {
+          if (error) {
+            responses.respondJSON(request, response, 500, {
+              message: 'Could not load the client page.',
+            });
+            return;
+          }
+    
+          response.writeHead(200, {
+            'Content-Type': 'text/html',
+            'Content-Length': Buffer.byteLength(data),
+          });
+    
+          response.end(data);
+        });
+    
+        return;
+      }
+
+      if (parsedUrl.pathname === '/documentation') {
+        const filePath = path.join(__dirname, '../client/documentation.html');
+    
+        fs.readFile(filePath, (error, data) => {
+          if (error) {
+            responses.respondJSON(request, response, 500, {
+              message: 'Could not load the documentation page.',
+            });
+            return;
+          }
+    
+          response.writeHead(200, {
+            'Content-Type': 'text/html',
+            'Content-Length': Buffer.byteLength(data),
+          });
+    
+          response.end(data);
+        });
+    
+        return;
+      }
+    
+      if (parsedUrl.pathname === '/style.css') {
+        const filePath = path.join(__dirname, '../client/style.css');
+    
+        fs.readFile(filePath, (error, data) => {
+          if (error) {
+            responses.respondJSON(request, response, 500, {
+              message: 'Could not load the stylesheet.',
+            });
+            return;
+          }
+    
+          response.writeHead(200, {
+            'Content-Type': 'text/css',
+            'Content-Length': Buffer.byteLength(data),
+          });
+    
+          response.end(data);
+        });
+    
+        return;
+      }
+    
+      if (parsedUrl.pathname === '/client.js') {
+        const filePath = path.join(__dirname, '../client/client.js');
+    
+        fs.readFile(filePath, (error, data) => {
+          if (error) {
+            responses.respondJSON(request, response, 500, {
+              message: 'Could not load the client script.',
+            });
+            return;
+          }
+    
+          response.writeHead(200, {
+            'Content-Type': 'text/javascript',
+            'Content-Length': Buffer.byteLength(data),
+          });
+    
+          response.end(data);
+        });
+    
+        return;
+      }
+
     if (request.method === 'POST') {
         if (parsedUrl.pathname === '/api/addBook') {
           parseBody(request, response, (body) => {

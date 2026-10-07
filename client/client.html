@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Book Finder</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <header>
+        <h1>Book Finder</h1>
+        <p>Search and explore the Book API</p>
+        <a class="nav-link" href="/documentation">API Documentation</a>
+    </header>
+
+  <main>
+    <section>
+      <h2>Browse Books</h2>
+
+      <button id="allBooksButton">View All Books</button>
+      <button id="titlesButton">View Titles</button>
+      <button id="authorsButton">View Authors</button>
+    </section>
+
+    <section>
+      <h2>Search Books</h2>
+
+      <label for="genreInput">Genre</label>
+      <input
+        type="text"
+        id="genreInput"
+        placeholder="Example: Fantasy"
+      >
+      <button id="genreButton">Search by Genre</button>
+
+      <br>
+
+      <label for="languageInput">Language</label>
+      <input
+        type="text"
+        id="languageInput"
+        placeholder="Example: English"
+      >
+      <button id="languageButton">Search by Language</button>
+    </section>
+
+    <section>
+        <h2>Add a Book</h2>
+        <p>Add a new book to the current book list.</p>
+  
+        <form id="addBookForm">
+          <label for="addTitle">Title</label>
+          <input
+            type="text"
+            id="addTitle"
+            placeholder="Book title"
+            required
+          >
+  
+          <label for="addAuthor">Author</label>
+          <input
+            type="text"
+            id="addAuthor"
+            placeholder="Author"
+            required
+          >
+  
+          <br>
+  
+          <label for="addCountry">Country</label>
+          <input
+            type="text"
+            id="addCountry"
+            placeholder="Country"
+          >
+  
+          <label for="addLanguage">Language</label>
+          <input
+            type="text"
+            id="addLanguage"
+            placeholder="Language"
+          >
+  
+          <br>
+  
+          <label for="addPages">Pages</label>
+          <input
+            type="number"
+            id="addPages"
+            placeholder="Pages"
+          >
+  
+          <label for="addYear">Year</label>
+          <input
+            type="number"
+            id="addYear"
+            placeholder="Year"
+          >
+  
+          <br>
+  
+          <button type="submit">Add Book</button>
+        </form>
+    </section>
+
+    <section>
+        <h2>Update a Book</h2>
+        <p>Enter an existing title and the information you want to change.</p>
+  
+        <form id="updateBookForm">
+          <label for="updateTitle">Book Title</label>
+          <input
+            type="text"
+            id="updateTitle"
+            placeholder="Existing book title"
+            required
+          >
+  
+          <br>
+  
+          <label for="updateAuthor">New Author</label>
+          <input
+            type="text"
+            id="updateAuthor"
+            placeholder="New author"
+          >
+  
+          <label for="updateLanguage">New Language</label>
+          <input
+            type="text"
+            id="updateLanguage"
+            placeholder="New language"
+          >
+  
+          <br>
+  
+          <label for="updatePages">New Page Count</label>
+          <input
+            type="number"
+            id="updatePages"
+            placeholder="New page count"
+          >
+  
+          <label for="updateYear">New Year</label>
+          <input
+            type="number"
+            id="updateYear"
+            placeholder="New year"
+          >
+  
+          <br>
+  
+          <button type="submit">Update Book</button>
+        </form>
+    </section>
+
+    <section>
+      <h2>Results</h2>
+      <div id="status"></div>
+      <div id="results">
+        <p>Choose an option above to view books.</p>
+      </div>
+    </section>
+  </main>
+
+  <script src="/client.js"></script>
+</body>
+</html>
